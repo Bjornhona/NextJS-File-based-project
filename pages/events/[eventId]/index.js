@@ -3,6 +3,8 @@ import { getEventById } from '../../../dummy-data';
 import EventSummary from '../../../components/event-detail/EventSummary';
 import EventLogistics from '../../../components/event-detail/EventLogistics';
 import EventContent from '../../../components/event-detail/EventContent';
+import ErrorAlert from '../../../components/ui/ErrorAlert';
+import Button from '../../../components/ui/Button';
 
 const EventItemPage = () => {
   const router = useRouter();
@@ -10,7 +12,12 @@ const EventItemPage = () => {
   const event = getEventById(eventId);
 
   if (!event) {
-    return <p>No event found.</p>;
+    return (
+      <ErrorAlert>
+        <p>No event found.</p>
+      </ErrorAlert>
+    )
+
   }
   const {title, description, location, date, image} = event;
 
@@ -27,8 +34,10 @@ const EventItemPage = () => {
         image={image}
         imageAlt={title}
       />
-      <EventContent><p>{description}</p></EventContent>
-      <button onClick={handleGoBack}>Back</button>
+      <EventContent>
+        <p>{description}</p>
+        <Button onClick={handleGoBack}>Back</Button>
+      </EventContent>
     </>
   )
 }

@@ -1,49 +1,64 @@
 import {useRouter} from 'next/router';
-import Link from 'next/link';
+import { getFilteredEvents } from '../../../dummy-data';
+import EventList from '../../../components/events/EventList';
+import ResultsTitle from '../../../components/events/ResultsTitle';
+import Button from '../../../components/ui/Button';
+import ErrorAlert from '../../../components/ui/ErrorAlert';
 
 const SearchEventsPage = () => {
   const router = useRouter();
-  const { query } = router;
+  const { slug } = router.query;
 
-  const DUMMY_EVENTS = [
-    {
-      id: 1,
-      title: 'Event 1',
-      description: 'Description for Event 1',
-      date: '2022-01-01',
-      location: 'Location 1',
-    },
-    {
-      id: 2,
-      title: 'Event 2',
-      description: 'Description for Event 2',
-      date: '2022-02-01',
-      location: 'Location 2',
-    },
-    {
-      id: 3,
-      title: 'Event 3',
-      description: 'Description for Event 3',
-      date: '2022-03-01',
-      location: 'Location 3',
-    }
-  ];
+  if (!slug) {
+    return (
+      <p className={'center'}>Loading...</p>
+    )
+  }
+
+  const filteredYear = slug[0];
+  const filteredMonth = slug[1];
+
+  const numYear = +filteredYear;
+  const numMonth = +filteredMonth;
+  const date = new Date(numYear, numMonth - 1);
+
+  if (isNaN(numYear) || isNaN(numMonth) || numYear < 2021 || numYear > 2030 || numMonth < 1 || numMonth > 12) {
+    return (
+      <>
+        <ErrorAlert>
+          <p className={'center'}>Invalid year or month. Please adjust your values!</p>
+        </ErrorAlert>
+        <div className={'center'}>
+          <Button link={'/events'}>Show all events</Button>
+        </div>
+      </>
+    )
+  }
+
+  const filteredEvents = getFilteredEvents({
+    year: numYear,
+    month: numMonth,
+  });
+
+  if (!filteredEvents || filteredEvents.length === 0) {
+    return (
+      <>
+        <ResultsTitle date={date} />
+        <ErrorAlert>
+          <p className={'center'}>No events found for the selected year and month.</p>
+        </ErrorAlert>
+        <div className={'center'}>
+          <Button link={'/events'}>Show all events</Button>
+        </div>
+      </>
+    )
+  }  
 
   return (
-    <div>
-      <h1>Filtered Events Page</h1>
-      <p>This is the Filtered Events Page.</p>
-      {/* <form>
-        <input type="submit" value="Search" name="searchYear"/>
-      </form> */}
-      <Link href={'2/2022'}>2022</Link>
-      <h4>Filtered events</h4>
-      <ul>
-        <li>Event Item 1</li>
-        <li>Event Item 2</li>
-        <li>Event Item 3</li>
-      </ul>
-    </div>
+    <>
+      <ResultsTitle date={date} />
+      <EventList events={filteredEvents} />
+    </>
   )
 }
 

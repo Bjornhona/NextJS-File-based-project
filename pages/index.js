@@ -5,10 +5,10 @@ const HomePage = () => {
   const featuredEvents = getFeaturedEvents();
 
   return (
-    <div>
+    <section>
       <h1>Featured Events</h1>
       <EventList events={featuredEvents} />
-    </div>
+    </section>
   )
 }
 
