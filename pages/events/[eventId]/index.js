@@ -19,9 +19,7 @@ const EventItemPage = () => {
   };
 
   return (
-    <div>
-      <h1>Event Item Page</h1>
-      <p>This is the Event Item Page.</p>
+    <>
       <EventSummary title={title} />
       <EventLogistics 
         date={date}
@@ -31,7 +29,7 @@ const EventItemPage = () => {
       />
       <EventContent><p>{description}</p></EventContent>
       <button onClick={handleGoBack}>Back</button>
-    </div>
+    </>
   )
 }
 

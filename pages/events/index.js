@@ -6,9 +6,7 @@ const EventsPage = () => {
 
   return (
     <div>
-      <h1>Events Page</h1>
-      <p>This is the Events Page.</p>
-      <h4>All events</h4>
+      <h1>All Events</h1>
       <EventList events={events} />
     </div>
   )
