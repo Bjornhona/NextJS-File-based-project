@@ -31,12 +31,12 @@ const SearchEventsPage = () => {
 
   return (
     <div>
-      <h1>Search Events Page</h1>
-      <p>This is the Search Events Page.</p>
+      <h1>Filtered Events Page</h1>
+      <p>This is the Filtered Events Page.</p>
       {/* <form>
         <input type="submit" value="Search" name="searchYear"/>
       </form> */}
-      <Link href={'events/2022'}>2022</Link>
+      <Link href={'2/2022'}>2022</Link>
       <h4>Filtered events</h4>
       <ul>
         <li>Event Item 1</li>
