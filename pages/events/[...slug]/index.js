@@ -4,6 +4,7 @@ import EventList from '../../../components/events/EventList';
 import ResultsTitle from '../../../components/events/ResultsTitle';
 import Button from '../../../components/ui/Button';
 import ErrorAlert from '../../../components/ui/ErrorAlert';
+import Head from 'next/head';
 
 const SearchEventsPage = (props) => {
   const { dateNum, filteredEvents, hasError } = props;
@@ -27,9 +28,17 @@ const SearchEventsPage = (props) => {
   //   month: numMonth,
   // });
 
+  const pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta name="description" content={`All events for ${dateNum.month}/${dateNum.year}.`} />
+    </Head>
+  )
+
   if (hasError) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p className={'center'}>Invalid year or month. Please adjust your values!</p>
         </ErrorAlert>
@@ -45,6 +54,7 @@ const SearchEventsPage = (props) => {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        {pageHeadData}
         <ResultsTitle date={date} />
         <ErrorAlert>
           <p className={'center'}>No events found for the selected year and month.</p>
@@ -58,6 +68,7 @@ const SearchEventsPage = (props) => {
 
   return (
     <>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList events={filteredEvents} />
     </>

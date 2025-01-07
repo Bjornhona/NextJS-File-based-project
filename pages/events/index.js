@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import EventList from '../../components/events/EventList';
 import {getAllEvents} from '../../helpers/api-util';
 import EventsSearch from '../../components/events/EventsSearch';
@@ -12,6 +13,10 @@ const EventsPage = ({events}) => {
 
   return (
     <section>
+      <Head>
+        <title>All Events</title>
+        <meta name="description" content="A simple event app built with Next.js" />
+      </Head>
       <h1>All Events</h1>
       <EventsSearch onSearch={handleEventList} />
       <EventList events={events} />
